@@ -82,6 +82,12 @@ allure serve {complete_location_from_home}/report
 ![img.png](img.png)
 should be look like this.
 
+### NOTE
+In order to remove the containers which are not running currently. User can run the below command:
+```
+docker system prune -a 
+```
+
 ### References
 * Python Faker: https://faker.readthedocs.io/en/master/
 * Allure Report: https://docs.qameta.io/allure/
