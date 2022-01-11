@@ -17,7 +17,13 @@ fake = Faker()
 @given('Launch the browser')
 def launch_browser(context):
     try:
-        context.driver = webdriver.Chrome(ChromeDriverManager().install())
+        # This code work in case a user wants to run the ui automation in some standalone server
+        context.driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub',
+                                          desired_capabilities=DesiredCapabilities.CHROME
+                                          )
+        # Below line is when user wants to run the automation in the local browser
+        # context.driver = webdriver.Chrome(ChromeDriverManager().install())
+
         context.driver.maximize_window()
         context.driver.get(TestData.URL)
     except:
