@@ -56,16 +56,22 @@ docker run -d --network="host" xcnt-automation behave
 and then type `docker logs {random_id}`
 
 ###### Alternate to run docker with some selenium standalone server, if user has `docker-compose.yml`, then the below methodology can be used to execute the framework.
-1. Pull docker chrome container `docker pull selenium/node-chrome-debug`
-same for firefox `selenium/node-firefox-debug`
-2. Install VNC Server using the following link `https://www.realvnc.com/en/connect/download/viewer/`
-3. run: `docker-compose -f docker-compose.yml up -d`
-4. In VNC server type `localhost:9001` and password will be `secret`
+1. Install VNC Server using the following link `https://www.realvnc.com/en/connect/download/viewer/`
+2. In the Automation folder run the `docker-compose -f docker-compose.yml up -d`
+   ![img_3.png](img_3.png)
+3. Navigate to the chrome browser and type `http://localhost:4444/grid/console` to view the selenium grid
+   ![img_1.png](img_1.png)
+4. Type `localhost:5900` in the VNC viewer and type password `secret` and run the automation just type behave in the terminal of project location to see UI execution
+   ![img_2.png](img_2.png)
+
+### NOTE 
+All the apps should be in the same network cashcog_be, cashcog_fe, selenium/hub, selenium/node-chrome-debug
 
 These steps are specially for web automation, but in order to make this successful small alteration is needed, which is not handled by the framework currently. This feature maybe available in the near future.
 ```buildoutcfg
-option = webdriver.ChromeOptions()
-driver = webdriver.remote("http://localhost:4444/wd/hub", option)
+context.driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub',
+                                  desired_capabilities=DesiredCapabilities.CHROME
+                                  )
 ```
 
 ### Reporting
